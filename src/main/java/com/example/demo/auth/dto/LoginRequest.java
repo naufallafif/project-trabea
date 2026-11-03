@@ -1,12 +1,7 @@
 package com.example.demo.auth.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
+import lombok.Data;
+@Data
 public class LoginRequest {
 
     private String workEmail;
