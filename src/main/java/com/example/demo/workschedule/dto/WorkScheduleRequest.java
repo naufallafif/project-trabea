@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class WorkScheduleRequest {
-
-    private LocalDate workDate;
     private Integer partTimeEmployeeId;
+    private String fullName;
+    private LocalDate workDate;
     private Integer workShiftId;
 }

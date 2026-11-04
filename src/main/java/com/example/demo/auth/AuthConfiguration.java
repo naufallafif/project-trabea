@@ -71,6 +71,10 @@ public class AuthConfiguration {
                                                 // Administrator to update part-time employees
                                                 .requestMatchers("/api/update-part-time/**")
                                                 .hasRole("ADMINISTRATOR")
+
+                                                // Administrator and Part Time Employee to see all work schedules
+                                                .requestMatchers("/api/show-all-work-schedules")
+                                                .hasAnyRole("MANAGER", "PART_TIMER")
                                                 // All other endpoints require authentication
                                                 .anyRequest()
                                                 .authenticated())
