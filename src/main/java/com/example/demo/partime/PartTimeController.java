@@ -32,21 +32,21 @@ public class PartTimeController {
         return ResponseEntity.ok(partTimeResponses);
     }
 
-    @GetMapping("/api/part-time/{id}")
+    @GetMapping("/api/admin/{id}")
     public ResponseEntity<PartTimeResponse> getPartTimeEmployeeById(@PathVariable Integer id) {
         return partTimeService.getPartTimeEmployeeById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/api/register")
+    @PostMapping("/api/admin/register")
     public ResponseEntity<PartTimeResponse> registerPartTimeEmployee(
             @RequestBody @Valid PartTimeRequest partTimeRequest) {
         PartTimeResponse response = partTimeService.registerPartTimeEmployee(partTimeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/api/update-part-time/{id}")
+    @PutMapping("/api/admin/update-part-time/{id}")
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<PartTimeResponse> updatePartTimeEmployee(
             @RequestBody @Valid PartTimeUpdateRequest partTimeUpdateRequest,

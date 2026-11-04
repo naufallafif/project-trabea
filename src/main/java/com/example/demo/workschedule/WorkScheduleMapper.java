@@ -1,9 +1,10 @@
 package com.example.demo.workschedule;
 
-import com.example.demo.partime.PartTimeEmployee;
 import com.example.demo.workschedule.dto.ApprovalRequest;
 import com.example.demo.workschedule.dto.WorkScheduleRequest;
 import com.example.demo.workschedule.dto.WorkScheduleResponse;
+
+import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -40,9 +41,13 @@ public interface WorkScheduleMapper {
                         @MappingTarget WorkSchedule workSchedule);
 
         // Response
-        @Mapping(source = "manager.id", target = "managerId")
-        @Mapping(source = "partTimeEmployee.id", target = "partTimeEmployeeId")
-        @Mapping(source = "workShift.id", target = "workShiftId")
-        @Mapping(target = "fullName", expression = "java(workSchedule.getPartTimeEmployee().getFirstName() + \" \" + workSchedule.getPartTimeEmployee().getLastName())")
-        WorkScheduleResponse toResponse(WorkSchedule workSchedule);
+
+        @Mapping(target = "managerId", source = "manager.id")
+        @Mapping(target = "partTimeEmployeeId", source = "partTimeEmployee.id")
+        @Mapping(target = "partTimeEmployeeName", expression = "java(entity.getPartTimeEmployee().getFirstName() + \" \" + entity.getPartTimeEmployee().getLastName())")
+        @Mapping(target = "workShiftId", source = "workShift.id")
+        WorkScheduleResponse toResponse(WorkSchedule entity);
+
+        List<WorkScheduleResponse> toResponseList(
+                        List<WorkSchedule> entities);
 }

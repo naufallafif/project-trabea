@@ -2,7 +2,7 @@ package com.example.demo.workshift;
 
 import com.example.demo.workshift.dto.WorkShiftRequest;
 import com.example.demo.workshift.dto.WorkShiftResponse;
-// import com.trabea.workshift.entity.WorkShift;
+import com.example.demo.workshift.WorkShift;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
