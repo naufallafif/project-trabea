@@ -1,5 +1,6 @@
 package com.example.demo.workschedule.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,5 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ApprovalRequest {
 
+    @NotNull(message = "Approval decision is required")
     private Boolean isApproved;
 }

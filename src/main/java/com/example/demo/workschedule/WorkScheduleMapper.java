@@ -1,6 +1,7 @@
 package com.example.demo.workschedule;
 
 import com.example.demo.workschedule.dto.ApprovalRequest;
+import com.example.demo.workschedule.dto.WorkScheduleDetailResponse;
 import com.example.demo.workschedule.dto.WorkScheduleRequest;
 import com.example.demo.workschedule.dto.WorkScheduleResponse;
 
@@ -50,4 +51,11 @@ public interface WorkScheduleMapper {
 
         List<WorkScheduleResponse> toResponseList(
                         List<WorkSchedule> entities);
+
+        @Mapping(target = "fullName", expression = "java(entity.getPartTimeEmployee().getFirstName() + \" \" + entity.getPartTimeEmployee().getLastName())")
+        @Mapping(target = "workEmail", source = "partTimeEmployee.user.workEmail")
+        @Mapping(target = "personalEmail", source = "partTimeEmployee.personalEmail")
+        @Mapping(target = "personalPhoneNumber", source = "partTimeEmployee.personalPhoneNumber")
+        WorkScheduleDetailResponse toDetailResponse(WorkSchedule entity);
+
 }

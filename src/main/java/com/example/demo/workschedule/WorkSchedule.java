@@ -1,7 +1,7 @@
 package com.example.demo.workschedule;
 
 import com.example.demo.employee.Employee;
-import com.example.demo.partime.PartTime;
+import com.example.demo.partime.PartTimeEmployee;
 import com.example.demo.workshift.WorkShift;
 
 import java.time.LocalDate;
@@ -41,9 +41,10 @@ public class WorkSchedule {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "part_time_employee_id", nullable = false)
-    private PartTime partTimeEmployee;
+    private PartTimeEmployee partTimeEmployee;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "work_shift_id", nullable = false)
     private WorkShift workShift;
+
 }
