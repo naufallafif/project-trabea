@@ -56,6 +56,9 @@ public class AuthConfiguration {
                                                 // Manager endpoints
                                                 .requestMatchers("/api/manager/**")
                                                 .hasRole("MANAGER")
+                                                // Administrator to see part-time employee by id
+                                                .requestMatchers(HttpMethod.GET, "/api/part-time/*")
+                                                .hasRole("ADMINISTRATOR")
                                                 // Part-time employee endpoints
                                                 .requestMatchers("/api/part-time/**")
                                                 .hasRole("PART_TIMER")
@@ -64,6 +67,9 @@ public class AuthConfiguration {
                                                 .hasRole("ADMINISTRATOR")
                                                 // Administrator to register part-time employees
                                                 .requestMatchers("/api/register")
+                                                .hasRole("ADMINISTRATOR")
+                                                // Administrator to update part-time employees
+                                                .requestMatchers("/api/update-part-time/**")
                                                 .hasRole("ADMINISTRATOR")
                                                 // All other endpoints require authentication
                                                 .anyRequest()

@@ -3,6 +3,7 @@ package com.example.demo.partime;
 import com.example.demo.partime.dto.PartTimeRequest;
 import com.example.demo.partime.dto.PartTimeResponse;
 // import com.example.demo.partime.PartTimeEmployee;
+import com.example.demo.partime.dto.PartTimeUpdateRequest;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,7 +25,7 @@ public interface PartTimeMapper {
     @Mapping(target = "joinDate", ignore = true)
     @Mapping(target = "resignDate", ignore = true)
     void updateEntity(
-            PartTimeRequest request,
+            PartTimeUpdateRequest request,
             @MappingTarget PartTimeEmployee partTimeEmployee);
 
     // Response

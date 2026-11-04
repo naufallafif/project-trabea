@@ -5,30 +5,18 @@ import com.example.demo.auth.dto.LoginResponse;
 import com.example.demo.role.Role;
 import com.example.demo.role.RoleRepository;
 import com.example.demo.role.UserRole;
-import com.example.demo.role.UserRoleRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
-
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
-
         private final UserRepository userRepository;
-
         private final RoleRepository roleRepository;
-
         private final PasswordEncoder passwordEncoder;
-
         private final JwtService jwtService;
 
         public AuthService(

@@ -3,23 +3,22 @@ package com.example.demo.partime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.data.repository.query.parser.Part;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.example.demo.user.UserRepository;
 import com.example.demo.partime.dto.PartTimeRequest;
 import com.example.demo.partime.dto.PartTimeResponse;
+import com.example.demo.partime.dto.PartTimeUpdateRequest;
 import com.example.demo.role.Role;
 import com.example.demo.role.RoleRepository;
 import com.example.demo.role.UserRole;
 import com.example.demo.role.UserRoleId;
 import com.example.demo.user.User;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
@@ -54,6 +53,12 @@ public class PartTimeService {
         // return new PartTimeRequest();
         // }
 
+        // get all part-time employees by id
+        public Optional<PartTimeResponse> getPartTimeEmployeeById(Integer id) {
+                return partTimeRepository.findById(id)
+                                .map(partTimeMapper::toResponse);
+        }
+
         public List<PartTimeResponse> getAllPartTimeEmployees() {
                 return partTimeRepository.findAll()
                                 .stream()
@@ -61,6 +66,7 @@ public class PartTimeService {
                                 .toList();
         }
 
+        // Register new part-time employee
         @Transactional
         public PartTimeResponse registerPartTimeEmployee(PartTimeRequest request) {
                 String[] nameParts = request.getFullName().trim()
@@ -150,11 +156,34 @@ public class PartTimeService {
                 String baseEmail = first + "." + last;
                 String workEmail = baseEmail + EMAIL_DOMAIN;
                 int counter = 1;
+
                 while (userRepository.existsById(workEmail)) {
                         workEmail = baseEmail + counter + EMAIL_DOMAIN;
                         counter++;
                 }
 
                 return workEmail;
+        }
+
+        // Update part-time employee
+        @Transactional
+        public PartTimeResponse updPartTimeResponse(PartTimeUpdateRequest request, Integer id) {
+                PartTimeEmployee partTimeEmployee = partTimeRepository
+                                .findById(id)
+                                .orElseThrow(() -> new ResponseStatusException(
+                                                HttpStatus.NOT_FOUND,
+                                                "Part-time employee not found"));
+
+                // Generate new work email if first name or last name has changed
+                String workEmail = generateWorkEmail(
+                                request.getFirstName(),
+                                request.getLastName());
+
+                partTimeEmployee.getUser().setWorkEmail(workEmail);
+
+                partTimeMapper.updateEntity(request, partTimeEmployee);
+                PartTimeEmployee updatedEmployee = partTimeRepository.saveAndFlush(partTimeEmployee);
+                entityManager.refresh(updatedEmployee);
+                return partTimeMapper.toResponse(updatedEmployee);
         }
 }
