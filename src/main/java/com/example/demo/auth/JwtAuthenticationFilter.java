@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -35,42 +36,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (authorizationHeader == null ||
                 !authorizationHeader.startsWith("Bearer ")) {
-
             filterChain.doFilter(request, response);
-
             return;
         }
 
         String token = authorizationHeader.substring(7);
-
         try {
-
             if (jwtService.isTokenValid(token)) {
-
                 String workEmail = jwtService.extractWorkEmail(token);
-
                 String roleName = jwtService.extractRole(token);
-
                 if (SecurityContextHolder.getContext()
                         .getAuthentication() == null) {
-
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             workEmail,
                             null,
                             List.of(
                                     new SimpleGrantedAuthority(
-                                            "ROLE_" + roleName)));
-
+                                            "ROLE_" + roleName.toUpperCase(Locale.ROOT))));
                     SecurityContextHolder.getContext()
                             .setAuthentication(authentication);
+                    System.out.println("JWT ROLE: " + roleName);
+                    System.out.println("Authority: ROLE_" + roleName);
                 }
             }
-
         } catch (Exception exception) {
-
             SecurityContextHolder.clearContext();
         }
-
         filterChain.doFilter(request, response);
     }
 }
