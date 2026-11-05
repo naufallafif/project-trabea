@@ -49,7 +49,6 @@ public class WorkScheduleService {
         this.employeeRepository = employeeRepository;
     }
 
-    // get all work schedules @GetMapping("/api/show-all-part-time")
     public List<WorkScheduleResponse> getAllWorkSchedules() {
         return workScheduleRepository.findAll()
                 .stream()

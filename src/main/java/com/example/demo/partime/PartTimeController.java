@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
+@RequestMapping("/api/part-time-employees")
 public class PartTimeController {
     private final PartTimeService partTimeService;
 
@@ -28,14 +30,14 @@ public class PartTimeController {
     }
 
     @Operation(summary = "Access Administrator")
-    @GetMapping("/api/show-all-part-time")
+    @GetMapping
     public ResponseEntity<List<PartTimeResponse>> getAllPartTime() {
         List<PartTimeResponse> partTimeResponses = partTimeService.getAllPartTimeEmployees();
         return ResponseEntity.ok(partTimeResponses);
     }
 
     @Operation(summary = "Access Administrator")
-    @GetMapping("/api/show-all-part-time/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PartTimeResponse> getPartTimeEmployeeById(@PathVariable Integer id) {
         return partTimeService.getPartTimeEmployeeById(id)
                 .map(ResponseEntity::ok)
@@ -43,7 +45,7 @@ public class PartTimeController {
     }
 
     @Operation(summary = "Access Administrator")
-    @PostMapping("/api/register-part-time")
+    @PostMapping
     public ResponseEntity<PartTimeResponse> registerPartTimeEmployee(
             @RequestBody @Valid PartTimeRequest partTimeRequest) {
         PartTimeResponse response = partTimeService.registerPartTimeEmployee(partTimeRequest);
@@ -51,7 +53,7 @@ public class PartTimeController {
     }
 
     @Operation(summary = "Access Administrator")
-    @PutMapping("/api/update-part-time/{id}")
+    @PutMapping("/{id}")
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<PartTimeResponse> updatePartTimeEmployee(
             @RequestBody @Valid PartTimeUpdateRequest partTimeUpdateRequest,
