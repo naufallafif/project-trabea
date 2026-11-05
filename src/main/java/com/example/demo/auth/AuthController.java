@@ -1,5 +1,5 @@
 package com.example.demo.auth;
-
+ 
 import com.example.demo.auth.dto.LoginRequest;
 import com.example.demo.auth.dto.LoginResponse;
 
@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
         private final AuthService authService;
-
         public AuthController(AuthService authService) {
-
                 this.authService = authService;
         }
 

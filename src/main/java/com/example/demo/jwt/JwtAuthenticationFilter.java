@@ -1,4 +1,4 @@
-package com.example.demo.auth;
+package com.example.demo.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -55,8 +55,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                             "ROLE_" + roleName.toUpperCase(Locale.ROOT))));
                     SecurityContextHolder.getContext()
                             .setAuthentication(authentication);
-                    System.out.println("JWT ROLE: " + roleName);
-                    System.out.println("Authority: ROLE_" + roleName);
                 }
             }
         } catch (Exception exception) {

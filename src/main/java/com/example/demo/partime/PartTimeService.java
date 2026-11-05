@@ -4,26 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.List;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import com.example.demo.partime.dto.PartTimeResponse;
-import com.example.demo.partime.PartTimeEmployee;
-import com.example.demo.workschedule.WorkSchedule;
-import com.example.demo.workschedule.WorkScheduleRepository;
-import org.springframework.data.repository.query.parser.Part;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import com.example.demo.user.UserRepository;
 import com.example.demo.partime.dto.PartTimeRequest;
-import com.example.demo.partime.dto.PartTimeResponse;
 import com.example.demo.partime.dto.PartTimeUpdateRequest;
 import com.example.demo.role.Role;
 import com.example.demo.role.RoleRepository;

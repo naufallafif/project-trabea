@@ -1,8 +1,8 @@
-package com.example.demo.auth;
+package com.example.demo.jwt;
 
 import java.util.Date;
 
-import javax.crypto.SecretKey;
+import javax.crypto.SecretKey; 
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -44,12 +44,10 @@ public class JwtService {
     }
 
     public String extractWorkEmail(String token) {
-
         return extractAllClaims(token).getSubject();
     }
 
     public String extractRole(String token) {
-
         return extractAllClaims(token).get("role", String.class);
     }
 

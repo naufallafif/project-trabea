@@ -2,6 +2,7 @@ package com.example.demo.auth;
 
 import com.example.demo.auth.dto.LoginRequest;
 import com.example.demo.auth.dto.LoginResponse;
+import com.example.demo.jwt.JwtService;
 import com.example.demo.role.Role;
 import com.example.demo.role.RoleRepository;
 import com.example.demo.role.UserRole;
@@ -51,7 +52,6 @@ public class AuthService {
                 }
 
                 // 3. Find requested role in database
-
                 Role requestedRole = roleRepository
                                 .findByNameIgnoreCase(request.getRoleName())
                                 .orElseThrow(() -> new ResponseStatusException(
