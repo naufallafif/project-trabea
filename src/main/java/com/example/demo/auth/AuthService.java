@@ -33,21 +33,19 @@ public class AuthService {
         }
 
         public LoginResponse login(LoginRequest request) {
-
                 // 1. Find user by work email
                 User user = userRepository
                                 .findByWorkEmailIgnoreCase(request.getWorkEmail())
                                 .orElseThrow(() -> new ResponseStatusException(
-                                                HttpStatus.NOT_FOUND,
+                                                HttpStatus.UNAUTHORIZED,
                                                 "incorrect email or password"));
 
                 // 2. Validate password
                 if (!passwordEncoder.matches(
                                 request.getPassword(),
                                 user.getPassword())) {
-
                         throw new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
+                                        HttpStatus.UNAUTHORIZED,
                                         "incorrect email or password");
                 }
 
@@ -55,7 +53,7 @@ public class AuthService {
                 Role requestedRole = roleRepository
                                 .findByNameIgnoreCase(request.getRoleName())
                                 .orElseThrow(() -> new ResponseStatusException(
-                                                HttpStatus.NOT_FOUND,
+                                                HttpStatus.FORBIDDEN,
                                                 "You are not authorized to login with this role"));
 
                 // 4. Check whether user owns the requested role
@@ -66,7 +64,7 @@ public class AuthService {
 
                 if (!hasRole) {
                         throw new ResponseStatusException(
-                                        HttpStatus.NOT_FOUND,
+                                        HttpStatus.FORBIDDEN,
                                         "You are not authorized to login with this role");
                 }
 

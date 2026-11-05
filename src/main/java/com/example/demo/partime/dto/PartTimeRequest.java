@@ -1,5 +1,6 @@
 package com.example.demo.partime.dto;
 
+import com.example.demo.validator.EducationWordValidation;
 import com.example.demo.validator.NumericOnly;
 
 import jakarta.validation.constraints.Email;
@@ -23,9 +24,9 @@ public class PartTimeRequest {
     @NumericOnly(message = "Personal phone number must be numeric only")
     private String personalPhoneNumber;
 
-    // TODO : add validator word Education (SD., SMP, SMA, D3, S1, S2, S3)
     @NotNull(message = "Last education cannot be null")
     @NotBlank(message = "Last education cannot be blank")
+    @EducationWordValidation
     private String lastEducation;
 
     private String onGoingEducation;
