@@ -110,6 +110,12 @@ public class WorkScheduleService {
                                                 HttpStatus.NOT_FOUND,
                                                 "Work schedule not found"));
 
+                if (Boolean.FALSE.equals(request.getIsApproved())
+                                && (request.getReason() == null || request.getReason().isBlank())) {
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                        "Reason tidak boleh kosong");
+                }
+                
                 workSchedule.setIsApproved(request.getIsApproved());
                 workSchedule.setManager(authenticatedManager);
 

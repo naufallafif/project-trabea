@@ -12,4 +12,6 @@ public class ApprovalRequest {
 
     @NotNull(message = "Approval decision is required")
     private Boolean isApproved;
+
+    private String reason;
 }

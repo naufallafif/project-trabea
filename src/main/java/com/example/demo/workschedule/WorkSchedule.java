@@ -34,6 +34,7 @@ public class WorkSchedule {
 
     @Column(name = "is_approved")
     private Boolean isApproved;
+    
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
