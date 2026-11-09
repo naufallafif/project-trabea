@@ -70,4 +70,11 @@ public class WorkScheduleController {
         WorkScheduleResponse response = workScheduleService.submitSchedule(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @Operation(summary = "Acces Part Time")
+    @GetMapping("/my-history")
+    public ResponseEntity<List<WorkScheduleResponse>> getMyHistory() {
+        return ResponseEntity.ok(workScheduleService.getMyHistory());
+    }
+
 }

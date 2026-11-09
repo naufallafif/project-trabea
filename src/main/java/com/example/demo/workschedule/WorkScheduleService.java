@@ -22,7 +22,6 @@ import com.example.demo.partime.PartTimeRepository;
 import com.example.demo.workschedule.dto.WorkRequestShift;
 import com.example.demo.workschedule.dto.ApprovalRequest;
 import com.example.demo.workschedule.dto.WorkScheduleDetailResponse;
-import com.example.demo.workschedule.dto.WorkScheduleRequest;
 import com.example.demo.workschedule.dto.WorkScheduleResponse;
 import com.example.demo.workshift.WorkShift;
 import com.example.demo.workshift.WorkShiftRepository;
@@ -110,12 +109,13 @@ public class WorkScheduleService {
                                                 HttpStatus.NOT_FOUND,
                                                 "Work schedule not found"));
 
+                // validator reason jika tidak di approve
                 if (Boolean.FALSE.equals(request.getIsApproved())
                                 && (request.getReason() == null || request.getReason().isBlank())) {
                         throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                                         "Reason tidak boleh kosong");
                 }
-                
+
                 workSchedule.setIsApproved(request.getIsApproved());
                 workSchedule.setManager(authenticatedManager);
 
@@ -268,6 +268,19 @@ public class WorkScheduleService {
                 }
 
                 return duration.toHours();
+        }
+
+        public List<WorkScheduleResponse> getMyHistory() {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                PartTimeEmployee partTimeEmployee = partTimeRepository.findByUser_WorkEmail(authentication.getName())
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Part Time Employee not found"));
+
+                List<WorkSchedule> schedules = workScheduleRepository
+                                .findByPartTimeEmployee_IdOrderByWorkDateDesc(partTimeEmployee.getId());
+
+                return workScheduleMapper.toResponseList(schedules);
         }
 
 }

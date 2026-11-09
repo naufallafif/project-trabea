@@ -84,6 +84,10 @@ public class AuthConfiguration {
                                                 .requestMatchers(HttpMethod.GET, "/api/work-schedules/pending-approval")
                                                 .hasRole("MANAGER")
 
+                                                // Part Time to see history login
+                                                .requestMatchers(HttpMethod.GET, "/api/work-schedules/my-history")
+                                                .hasRole("PARTTIMER")
+
                                                 // Manager to view details of an approved schedule
                                                 .requestMatchers(HttpMethod.GET, "/api/work-schedules/*")
                                                 .hasRole("MANAGER")
@@ -95,6 +99,7 @@ public class AuthConfiguration {
                                                 // Part time to request Shift
                                                 .requestMatchers(HttpMethod.POST, "/api/work-schedules")
                                                 .hasRole("PARTTIMER")
+
                                                 // All other endpoints require authentication
                                                 .anyRequest()
                                                 .authenticated())
